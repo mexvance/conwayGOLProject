@@ -18,5 +18,11 @@ namespace GameOfLifeSolver.Services
             var result = await _apiService.GetToken(name);
             return result.Token;
         }
+
+        public async Task<string> PostUpdate(string token, int generationsComputed)
+        {
+            var result = await _apiService.PostUpdateAsync(token, generationsComputed);
+            return result.gamestate;
+        }
     }
 }
