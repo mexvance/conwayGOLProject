@@ -16,7 +16,7 @@ namespace NUnitTestProject1
         [Test]
         public void TestSolveGeneration()
         {
-            var solvedBoard = SolverService.SolveGeneration(new List<UpdateResponseBoardSquare>());
+            var solvedBoard = SolverService.SolveGeneration(new List<Cell>());
             Assert.AreEqual(solvedBoard, "{}");
         }
     }

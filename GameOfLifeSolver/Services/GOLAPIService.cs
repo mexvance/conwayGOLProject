@@ -49,7 +49,7 @@ namespace GameOfLifeSolver.Services
     {
         public GameState GameState { get; set; }
         public long generationsToCompute { get; set; }
-        public IEnumerable<UpdateResponseBoardSquare> seedBoard { get; set; }
+        public IEnumerable<Cell> seedBoard { get; set; }
         public bool IsError { get; set; }
         public string ErrorMessage { get; set; }
     }
