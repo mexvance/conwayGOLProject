@@ -16,10 +16,11 @@ namespace GameOfLifeSolver
             var solverService = new GOLService(apiService);
             var random = new Random();
             var time = DateTime.Now.Second;
-            var token = await solverService.GetToken("Bob"+random.Next().ToString());
+            var token = await solverService.GetToken("Bob" + random.Next().ToString());
             Console.WriteLine(token);
-            List<Cell> board = null;
+            Board board = null;
             int count = 0;
+
             var state = await solverService.PostUpdate(token, count);
             //game loop
             while (true)
@@ -29,13 +30,13 @@ namespace GameOfLifeSolver
                 {
                     time = newTime;
                     state = await solverService.PostUpdate(token, count);
-                    if(board is null || board.Count == 0)
+                    if (board is null || board.Cells.Count == 0)
                     {
-                        board = state.Cells;
+                        board = state.board;
                     }
                     Console.WriteLine(state.State);
                 }
-                if(state.State == "Started")
+                if (state.State == "Started")
                 {
                     board = await solverService.SolveBoard(board);
                     count++;
