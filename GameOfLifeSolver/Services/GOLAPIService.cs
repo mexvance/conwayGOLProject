@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using GameOfLifeSolver.Enums;
 
 namespace GameOfLifeSolver.Services
 {
@@ -45,7 +46,7 @@ namespace GameOfLifeSolver.Services
 
     public class UpdateResponse
     {
-        public string gamestate { get; set; }
+        public GameState gamestate { get; set; }
         public int? generationsToCompute { get; set; }
         public List<UpdateResponseBoardSquare> seedBoard { get; set; }
         public bool isError { get; set; }
