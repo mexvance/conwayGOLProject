@@ -21,20 +21,34 @@ namespace GameOfLifeSolver.Models
             {
                 return $"{{{X},{Y}}}";
             }
-            public List<Cell> neighbors
-            {
-                get => new List<Cell> {
-                    new Cell(X -1, Y - 1),
-                    new Cell(X -1, Y),
-                    new Cell(X -1, Y + 1),
-                    new Cell(X, Y - 1),
-                    new Cell(X, Y + 1),
-                    new Cell(X +1, Y -1),
-                    new Cell(X +1, Y),
-                    new Cell(X +1, Y + 1),
-                };
-            }
-            public override bool Equals(object obj)
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell LowerMiddle => new Cell(X, Y - 1);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell LowerRight => new Cell(X + 1, Y - 1);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell LowerLeft => new Cell(X - 1, Y - 1);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell Right => new Cell(X + 1, Y);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell Left => new Cell(X - 1, Y);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell UpperRight => new Cell(X + 1, Y + 1);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell UpperMiddle => new Cell(X, Y + 1);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public Cell UpperLeft => new Cell(X - 1, Y + 1);
+        [System.Text.Json.Serialization.JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        public IEnumerable<Cell> Neighbors => new[] { LowerMiddle, LowerRight, LowerLeft, Right, Left, UpperRight, UpperMiddle, UpperLeft };
+        public override bool Equals(object obj)
             {
                 return obj is Cell cell &&
                        X == cell.X &&

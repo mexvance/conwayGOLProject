@@ -22,14 +22,55 @@ namespace GameOfLifeSolver.Services
             return resultBoard;
         }
 
-        public static List<Cell> SolveGeneration(List<Cell> resultBoard)
+        public static List<Cell> SolveGeneration(List<Cell> board)
         {
-            return new List<Cell>();
+            var list = new List<Cell>();
+            foreach(var cell in board)
+            {
+                var neighbors = FindNeighborCount(cell, board);
+                list = SetLivingCells(neighbors, cell, board, ref list);
+            }
+
+            return list;
         }
-        
+
+        private static List<Cell> SetLivingCells(int neighbors, Cell cell, List<Cell> board, ref List<Cell>list)
+        { 
+            if (neighbors == 2 || neighbors == 3)
+            {
+                list.Add(cell);
+            }
+
+            foreach (var neighbor in cell.Neighbors)
+            {
+                var neighborIsCurrentlyDead = !board.Any(c => c == neighbor);
+                if (neighborIsCurrentlyDead && FindNeighborCount(neighbor, board) == 3)
+                    list.Add(neighbor);
+            }
+            var distinctList = list.Distinct();
+            return distinctList.ToList();
+        }
+
         public static int FindNeighborCount(Cell cell, IEnumerable<Cell> board)
         {
-            return cell.neighbors.Where(c => c.CellIsNeighbor(cell)).ToList().Count;
+            var neighbors = 0;
+            if (board.Any(c => c == cell.UpperLeft))
+                neighbors++;
+            if (board.Any(c => c == cell.UpperMiddle))
+                neighbors++;
+            if (board.Any(c => c == cell.UpperRight))
+                neighbors++;
+            if (board.Any(c => c == cell.Left))
+                neighbors++;
+            if (board.Any(c => c == cell.Right))
+                neighbors++;
+            if (board.Any(c => c == cell.LowerLeft))
+                neighbors++;
+            if (board.Any(c => c == cell.LowerMiddle))
+                neighbors++;
+            if (board.Any(c => c == cell.LowerRight))
+                neighbors++;
+            return neighbors;
         }
 
     }

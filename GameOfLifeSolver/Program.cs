@@ -14,7 +14,7 @@ namespace GameOfLifeSolver
             long generationsComputed = 0;
             long generationsToCompute = 0;
             Console.WriteLine("Hello World!");
-            UpdateResponse updateResponse = null;
+            UpdateResponse updateResponse = new UpdateResponse();
             var serverAPI = RestService.For<IServerAPI>("http://daybellphotography.com");
             var apiService = new GOLAPIService(serverAPI);
             var solverService = new GOLService(apiService);
