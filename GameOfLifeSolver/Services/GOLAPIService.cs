@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using GameOfLifeSolver.Enums;
+using GameOfLifeSolver.Models;
 
 namespace GameOfLifeSolver.Services
 {
@@ -18,7 +19,7 @@ namespace GameOfLifeSolver.Services
         }
         public async Task<RegisterResult> GetToken(string name)
         {
-            var request = new RegisterRequest { name = name };
+            var request = new RegisterRequest { Name = name };
             return await _serverAPI.RegisterAsync(request);
         }
 
@@ -46,17 +47,11 @@ namespace GameOfLifeSolver.Services
 
     public class UpdateResponse
     {
-        public GameState gamestate { get; set; }
-        public int? generationsToCompute { get; set; }
-        public List<UpdateResponseBoardSquare> seedBoard { get; set; }
-        public bool isError { get; set; }
-        public string errorMessage { get; set; }
-    }
-
-    public class UpdateResponseBoardSquare
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public GameState GameState { get; set; }
+        public long generationsToCompute { get; set; }
+        public IEnumerable<UpdateResponseBoardSquare> seedBoard { get; set; }
+        public bool IsError { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
     public class RegisterResult
@@ -67,6 +62,6 @@ namespace GameOfLifeSolver.Services
 
     public class RegisterRequest
     {
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }

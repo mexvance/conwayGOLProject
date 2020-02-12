@@ -11,6 +11,8 @@ namespace GameOfLifeSolver
     {
         static async Task Main(string[] args)
         {
+            long generationsComputed = 0;
+            long generationsToCompute = 0;
             Console.WriteLine("Hello World!");
             UpdateResponse updateResponse = null;
             var serverAPI = RestService.For<IServerAPI>("http://daybellphotography.com");
@@ -29,21 +31,20 @@ namespace GameOfLifeSolver
                     Thread.Sleep(TimeSpan.FromSeconds(1));
                 }
                 updateResponse = await solverService.PostUpdate(token, 0);
-            } while (updateResponse.gamestate == GameState.NotStarted);
+            } while (updateResponse.GameState == GameState.NotStarted);
 
+            var seedBoard = updateResponse.seedBoard;
             //game loop
-            while (updateResponse.gamestate == GameState.InProgress)
+            while (updateResponse.GameState == GameState.InProgress)
             {
                 var newTime = DateTime.Now.Second;
                 if (newTime - time >= 1)
                 {
                     time = newTime;
                     updateResponse = await solverService.PostUpdate(token, 0);
-                    if (updateResponse.seedBoard != null)
-                        foreach (var item in updateResponse.seedBoard)
-                        {
-                            Console.WriteLine(item.X + "" +  item.Y);
-                        }
+                    generationsToCompute = updateResponse.generationsToCompute;
+                    var solvedBoard = SolverService.Solve(seedBoard, generationsToCompute);
+                    
                 }
             }
         }
