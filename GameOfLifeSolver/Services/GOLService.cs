@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLifeSolver.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,9 @@ namespace GameOfLifeSolver.Services
             return result.Token;
         }
 
-        public async Task<UpdateResponse> PostUpdate(string token, int generationsComputed)
+        public async Task<UpdateResponse> PostUpdate(string token, long? generationsComputed, IEnumerable<Cell> solvedBoard)
         {
-            var result = await _apiService.PostUpdateAsync(token, generationsComputed);
+            var result = await _apiService.PostUpdateAsync(token, generationsComputed, solvedBoard);
             return result;
         }
     }

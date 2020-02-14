@@ -23,9 +23,9 @@ namespace GameOfLifeSolver.Services
             return await _serverAPI.RegisterAsync(request);
         }
 
-        public async Task<UpdateResponse> PostUpdateAsync(string token, int generations)
+        public async Task<UpdateResponse> PostUpdateAsync(string token, long? generations, IEnumerable<Cell> solvedBoard)
         {
-            var request = new UpdateRequest { token = token, generationsComputed = generations };
+            var request = new UpdateRequest { token = token, generationsComputed = generations, ResultBoard = solvedBoard };
             return await _serverAPI.UpdateAsync(request);
         }
     }
@@ -42,7 +42,9 @@ namespace GameOfLifeSolver.Services
     {
         public string token {get; set;}
 
-        public int generationsComputed { get; set; }
+        public long? generationsComputed { get; set; }
+
+        public IEnumerable<Cell> ResultBoard { get; set; }
     }
 
     public class UpdateResponse
