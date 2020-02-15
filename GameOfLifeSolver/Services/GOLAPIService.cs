@@ -35,38 +35,4 @@ namespace GameOfLifeSolver.Services
             return await _serverAPI.CompletedAsync(request);
         }
     }
-
-    public class CompletedRequest
-    {
-        public string token { get; set; }
-        public int generationsComputed { get; set; }
-        public List<Cell> ResultBoard { get; set; }
-    }
-
-    public class UpdateRequest
-    {
-        public string token {get; set;}
-
-        public int generationsComputed { get; set; }
-    }
-
-    public class UpdateResponse
-    {
-        public GameState GameState { get; set; }
-        public int? generationsToCompute { get; set; }
-        public List<Cell> seedBoard { get; set; }
-        public bool IsError { get; set; }
-        public string ErrorMessage { get; set; }
-    }
-
-    public class RegisterResult
-    {
-        public string Token { get; set; }
-        public int GenerationsComputed { get; set; }
-    }
-
-    public class RegisterRequest
-    {
-        public string Name { get; set; }
-    }
 }

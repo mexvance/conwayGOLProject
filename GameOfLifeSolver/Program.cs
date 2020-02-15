@@ -1,4 +1,5 @@
 ﻿using GameOfLifeSolver.Enums;
+using GameOfLifeSolver.Models;
 using GameOfLifeSolver.Services;
 using Refit;
 using System;
@@ -40,7 +41,7 @@ namespace GameOfLifeSolver
                 if (newTime - time >= 1)
                 {
                     time = newTime;
-                    solverService.PostUpdate(token, generationsComputed);
+                    _ = solverService.PostUpdate(token, generationsComputed);
                 }
                 board = SolverService.SolveGeneration(board);
                 generationsComputed++;

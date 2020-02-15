@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using GameOfLifeSolver.Models;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.Text;
