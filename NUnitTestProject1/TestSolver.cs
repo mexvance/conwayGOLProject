@@ -28,10 +28,14 @@ namespace NUnitTestProject1
         [TestCase("(1,1);(1,2);(1,3);(2,1);(2,2);(2,3);(3,1);(3,2);(3,3)", "(2,0);(1,1);(3,1);(0,2);(4,2);(1,3);(3,3);(2,4)", 1, "block turns into diamond")]
         public void TestSolveGeneration(string seed, string result, int numGenerations, string reason)
         {
-            var seedBoard = seed.FromString();
-            var expectedResult = result.FromString();
+            var seedBoard = seed.FromString().ToList();
+            var expectedResult = result.FromString().ToList();
 
-            var actualResult = SolverService.Solve(seedBoard, numGenerations);
+            var actualResult = new List<Cell>();
+            for(int i = 0; i < numGenerations; i++)
+            {
+                actualResult = SolverService.SolveGeneration(seedBoard);
+            }
 
             expectedResult.Should().BeEquivalentTo(actualResult, because: reason);
         }
@@ -45,20 +49,6 @@ namespace NUnitTestProject1
             int actualNeighbors = SolverService.FindNeighborCount(board.First(), board);
 
             Assert.AreEqual(expectedNeighbors, actualNeighbors);
-        }
-
-        [Test]
-        public void UpperLeftFrom1_1()
-        {
-            var starting = new Cell(1, 1);
-            Assert.AreEqual(starting.UpperLeft, new Cell(0, 2));
-        }
-
-        [Test]
-        public void LowerRightFrom1_1()
-        {
-            var starting = new Cell(1, 1);
-            Assert.AreEqual(starting.LowerRight, new Cell(2, 0));
         }
     }
     public static class SolverExtensions

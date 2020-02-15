@@ -8,20 +8,6 @@ namespace GameOfLifeSolver.Services
 {
     public class SolverService
     {
-        public static IEnumerable<Cell> Solve(IEnumerable<Cell> startingBoard, int? numGenerations)
-        {
-            var resultBoard = new List<Cell>(startingBoard);
-
-            for (long generation = 0; generation < numGenerations; generation++)
-            {
-                Console.Write($"{generation} ");
-                resultBoard = SolveGeneration(resultBoard);
-
-            }
-
-            return resultBoard;
-        }
-
         public static List<Cell> SolveGeneration(List<Cell> board)
         {
             var list = new List<Cell>();
@@ -47,30 +33,12 @@ namespace GameOfLifeSolver.Services
                 if (neighborIsCurrentlyDead && FindNeighborCount(neighbor, board) == 3)
                     list.Add(neighbor);
             }
-            var distinctList = list.Distinct();
-            return distinctList.ToList();
+            return list.Distinct().ToList();
         }
 
         public static int FindNeighborCount(Cell cell, IEnumerable<Cell> board)
         {
-            var neighbors = 0;
-            if (board.Any(c => c == cell.UpperLeft))
-                neighbors++;
-            if (board.Any(c => c == cell.UpperMiddle))
-                neighbors++;
-            if (board.Any(c => c == cell.UpperRight))
-                neighbors++;
-            if (board.Any(c => c == cell.Left))
-                neighbors++;
-            if (board.Any(c => c == cell.Right))
-                neighbors++;
-            if (board.Any(c => c == cell.LowerLeft))
-                neighbors++;
-            if (board.Any(c => c == cell.LowerMiddle))
-                neighbors++;
-            if (board.Any(c => c == cell.LowerRight))
-                neighbors++;
-            return neighbors;
+            return board.Where(c => c.CellIsNeighbor(cell)).Count();
         }
 
     }

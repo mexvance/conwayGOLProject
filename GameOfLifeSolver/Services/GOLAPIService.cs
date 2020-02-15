@@ -28,6 +28,12 @@ namespace GameOfLifeSolver.Services
             var request = new UpdateRequest { token = token, generationsComputed = generations };
             return await _serverAPI.UpdateAsync(request);
         }
+
+        public async Task<UpdateResponse> PostCompletedAsync(string token, int generationsComputed, List<Cell> board)
+        {
+            var request = new CompletedRequest { token = token, generationsComputed = generationsComputed, ResultBoard = board };
+            return await _serverAPI.CompletedAsync(request);
+        }
     }
 
     public interface IServerAPI
@@ -36,6 +42,15 @@ namespace GameOfLifeSolver.Services
         Task<RegisterResult> RegisterAsync([Body(BodySerializationMethod.Serialized)]RegisterRequest name);
         [Post("/Update")]
         Task<UpdateResponse> UpdateAsync([Body(BodySerializationMethod.Serialized)]UpdateRequest request);
+        [Post("/Update")]
+        Task<UpdateResponse> CompletedAsync([Body(BodySerializationMethod.Serialized)]CompletedRequest request);
+    }
+
+    public class CompletedRequest
+    {
+        public string token { get; set; }
+        public int generationsComputed { get; set; }
+        public List<Cell> ResultBoard { get; set; }
     }
 
     public class UpdateRequest
@@ -49,7 +64,7 @@ namespace GameOfLifeSolver.Services
     {
         public GameState GameState { get; set; }
         public int? generationsToCompute { get; set; }
-        public IEnumerable<Cell> seedBoard { get; set; }
+        public List<Cell> seedBoard { get; set; }
         public bool IsError { get; set; }
         public string ErrorMessage { get; set; }
     }

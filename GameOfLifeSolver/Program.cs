@@ -11,8 +11,7 @@ namespace GameOfLifeSolver
     {
         static async Task Main(string[] args)
         {
-            int? generationsComputed;
-            int? generationsToCompute = 0;
+            int generationsComputed = 0;
             Console.WriteLine("Hello World!");
             UpdateResponse updateResponse = new UpdateResponse();
             var serverAPI = RestService.For<IServerAPI>("http://localhost");
@@ -33,20 +32,22 @@ namespace GameOfLifeSolver
                 updateResponse = await solverService.PostUpdate(token, 0);
             } while (updateResponse.GameState == GameState.NotStarted);
 
-            var seedBoard = updateResponse.seedBoard;
+            var board = updateResponse.seedBoard;
             //game loop
-            while (updateResponse.GameState == GameState.InProgress)
+            while (updateResponse.GameState == GameState.InProgress && generationsComputed < updateResponse.generationsToCompute)
             {
                 var newTime = DateTime.Now.Second;
                 if (newTime - time >= 1)
                 {
                     time = newTime;
-                    updateResponse = await solverService.PostUpdate(token, 0);
-                    generationsToCompute = updateResponse.generationsToCompute;
-                    var solvedBoard = SolverService.Solve(seedBoard, generationsToCompute);
-                    
+                    solverService.PostUpdate(token, generationsComputed);
                 }
+                board = SolverService.SolveGeneration(board);
+                generationsComputed++;
             }
+
+            _ = await solverService.PostCompleted(token, generationsComputed, board);
+            Console.WriteLine("Game solved");
         }
     }
 }
