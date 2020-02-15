@@ -8,19 +8,15 @@ namespace GameOfLifeSolver.Services
 {
     public class SolverService
     {
-
-
-        public static event EventHandler<SolverEventArgs> GenerationBatchCompleted;
         public static IEnumerable<Cell> Solve(IEnumerable<Cell> startingBoard, long numGenerations)
         {
             var resultBoard = new List<Cell>(startingBoard);
 
             for (long generation = 0; generation < numGenerations; generation++)
             {
-                var solvedBoard = SolveGeneration(resultBoard);
-                resultBoard = solvedBoard;
-                if (generation % 5 == 0)
-                    GenerationBatchCompleted?.Invoke(null, new SolverEventArgs(generation));
+                Console.Write($"{generation} ");
+                resultBoard = SolveGeneration(resultBoard);
+
             }
 
             return resultBoard;
@@ -75,15 +71,6 @@ namespace GameOfLifeSolver.Services
             if (board.Any(c => c == cell.LowerRight))
                 neighbors++;
             return neighbors;
-        }
-        public class SolverEventArgs : EventArgs
-        {
-            public SolverEventArgs(long generationsComputed)
-            {
-                GenerationsComputed = generationsComputed;
-            }
-
-            public long GenerationsComputed { get; set; }
         }
 
     }

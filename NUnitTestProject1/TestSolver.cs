@@ -35,20 +35,6 @@ namespace NUnitTestProject1
 
             expectedResult.Should().BeEquivalentTo(actualResult, because: reason);
         }
-        [TestCase("(0,0);(2,0);(1,-1);(2,-1);(1,-2)", "(2,0);(0,-1);(2,-1);(1,-2);(2,-2)", 1, "glider moved")]
-        [TestCase("(0,0);(2,0);(1,-1);(2,-1);(1,-2)", "(4,-5);(5,-5);(5,-3);(6,-5);(6,-4)",15, "glider moved")]
-        public void TestSolveGlider(string seed, string result, int numGenerations, string reason)
-        {
-            var seedBoard = seed.FromString();
-            var expectedResult = result.FromString();
-
-            var actualResult = SolverService.Solve(seedBoard, numGenerations);
-            foreach (var element in actualResult)
-            {
-                Console.WriteLine(element.ToString());
-            }
-            expectedResult.Should().BeEquivalentTo(actualResult, because: reason);
-        }
 
 
         [TestCase("(1,1);(1,2)", 1, Description = "1 neighbor")]
