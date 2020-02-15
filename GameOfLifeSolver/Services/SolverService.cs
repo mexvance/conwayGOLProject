@@ -8,7 +8,7 @@ namespace GameOfLifeSolver.Services
 {
     public class SolverService
     {
-        public static IEnumerable<Cell> Solve(IEnumerable<Cell> startingBoard, long numGenerations)
+        public static IEnumerable<Cell> Solve(IEnumerable<Cell> startingBoard, int? numGenerations)
         {
             var resultBoard = new List<Cell>(startingBoard);
 

@@ -11,11 +11,11 @@ namespace GameOfLifeSolver
     {
         static async Task Main(string[] args)
         {
-            long generationsComputed = 0;
-            long generationsToCompute = 0;
+            int? generationsComputed;
+            int? generationsToCompute = 0;
             Console.WriteLine("Hello World!");
             UpdateResponse updateResponse = new UpdateResponse();
-            var serverAPI = RestService.For<IServerAPI>("http://daybellphotography.com");
+            var serverAPI = RestService.For<IServerAPI>("http://localhost");
             var apiService = new GOLAPIService(serverAPI);
             var solverService = new GOLService(apiService);
             var random = new Random();

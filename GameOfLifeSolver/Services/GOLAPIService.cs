@@ -48,7 +48,7 @@ namespace GameOfLifeSolver.Services
     public class UpdateResponse
     {
         public GameState GameState { get; set; }
-        public long generationsToCompute { get; set; }
+        public int? generationsToCompute { get; set; }
         public IEnumerable<Cell> seedBoard { get; set; }
         public bool IsError { get; set; }
         public string ErrorMessage { get; set; }
