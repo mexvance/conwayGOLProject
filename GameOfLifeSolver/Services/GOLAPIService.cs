@@ -36,16 +36,6 @@ namespace GameOfLifeSolver.Services
         }
     }
 
-    public interface IServerAPI
-    {
-        [Post("/register")]
-        Task<RegisterResult> RegisterAsync([Body(BodySerializationMethod.Serialized)]RegisterRequest name);
-        [Post("/Update")]
-        Task<UpdateResponse> UpdateAsync([Body(BodySerializationMethod.Serialized)]UpdateRequest request);
-        [Post("/Update")]
-        Task<UpdateResponse> CompletedAsync([Body(BodySerializationMethod.Serialized)]CompletedRequest request);
-    }
-
     public class CompletedRequest
     {
         public string token { get; set; }
