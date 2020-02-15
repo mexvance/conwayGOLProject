@@ -6,7 +6,7 @@ namespace GameOfLifeSolver.Models
 {
     public class Cell
     {
-        public Cell() { }
+        private List<Cell> neighbors;
     
         public Cell(int x, int y)
         {
@@ -19,17 +19,26 @@ namespace GameOfLifeSolver.Models
     
         [JsonIgnore]
         [Newtonsoft.Json.JsonIgnore]
-        public List<Cell> Neighbors { get => new List<Cell> {
-                new Cell(X -1, Y - 1),
-                new Cell(X -1, Y),
-                new Cell(X -1, Y + 1),
-                new Cell(X, Y - 1),
-                new Cell(X, Y + 1),
-                new Cell(X +1, Y -1),
-                new Cell(X +1, Y),
-                new Cell(X +1, Y + 1),
-            };
+        public List<Cell> Neighbors { get
+            {
+                if (neighbors is null)
+                {
+                    neighbors = new List<Cell>
+                    {
+                        new Cell(X - 1, Y - 1),
+                        new Cell(X - 1, Y),
+                        new Cell(X - 1, Y + 1),
+                        new Cell(X, Y - 1),
+                        new Cell(X, Y + 1),
+                        new Cell(X + 1, Y - 1),
+                        new Cell(X + 1, Y),
+                        new Cell(X + 1, Y + 1)
+                    };
+                }
+                return neighbors;
+            }
         }
+
 
         public override string ToString()
         {
