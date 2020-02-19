@@ -19,9 +19,9 @@ namespace GameOfLifeSolver
             var apiService = new GOLAPIService(serverAPI);
             var solverService = new GOLService(apiService);
             var random = new Random();
-            var time = DateTime.Now.Second;
+            var time = DateTime.UtcNow.TimeOfDay;
             var token = await solverService.GetToken("BarnDoorMike"+random.Next().ToString());
-            Console.WriteLine(token);
+            Console.WriteLine("Received Token: " + token);
 
             do
             {
@@ -37,8 +37,9 @@ namespace GameOfLifeSolver
             //game loop
             while (updateResponse.GameState == GameState.InProgress && generationsComputed < updateResponse.generationsToCompute)
             {
-                var newTime = DateTime.Now.Second;
-                if (newTime - time >= 1)
+                var newTime = DateTime.UtcNow.TimeOfDay;
+                TimeSpan diff = newTime.Subtract(time).Duration();
+                if (diff.TotalSeconds >= 1)
                 {
                     time = newTime;
                     _ = solverService.PostUpdate(token, generationsComputed);
